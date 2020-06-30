@@ -1,0 +1,12 @@
+{
+    "worldOne": {
+        "name": "worldOne",
+        "desc": "desc1",
+        "coords": [43,354,454]
+    },
+    "worldTwo": {
+        "name": "worldTwo",
+        "desc": "desc2",
+        "coords": [43,354,454]
+    }
+}
