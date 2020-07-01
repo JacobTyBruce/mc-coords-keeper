@@ -14,7 +14,7 @@
               <v-list-item-title>{{item.title}}</v-list-item-title>
               <v-list-item-subtitle>{{item.desc}}</v-list-item-subtitle>
               <v-list-item-subtitle>
-                <v-btn :to="item.routeTo">View Coords</v-btn>
+                <v-btn :to="{name:WorldView, params: {world: item}}" router>View Coords</v-btn>
               </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
@@ -28,9 +28,13 @@
 
 <script>
 import Header from "@/components/Header";
-import * as data from "./assets/coords.json";
-console.log(data);
-const {name} = data;
+import * as worldsConfig from "./assets/coords.json";
+// set inner world obj to variable 'worlds'
+const {worlds} = worldsConfig;
+// can access worlds from inner array by using 'worlds[x]'
+
+console.log(worlds)
+console.log(worlds[1])
 
 export default {
   name: "App",
@@ -44,9 +48,6 @@ export default {
       { title: 4, desc: 'desc4', routeTo: '/world4' },
       ]
     };
-  },
-  created: function() {
-    console.log(name)
   }
 };
 </script>
