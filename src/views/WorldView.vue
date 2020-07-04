@@ -14,11 +14,17 @@
                     </v-avatar>
                 </v-col>
                 <v-col>
-                    
+                    <h1>{{innerWorldData.title}}</h1>
+                    <p>{{innerWorldData.desc}}</p>
                 </v-col>
             </v-row>
             <v-row>
-
+                <v-list>
+                    <v-list-item> {{this.coords[0]}} </v-list-item>
+                    <v-list-item> {{this.coords[1]}} </v-list-item>
+                    <v-list-item> {{this.coords[2]}} </v-list-item>
+                    <v-list-item> {{this.coords[3]}} </v-list-item>
+                </v-list>
             </v-row>
         </v-container>
     </v-main>
@@ -27,6 +33,12 @@
 <script>
 export default {
     name: 'WorldView',
-    props: ['world','worldData']
+    props: ['world','worldData'],
+    data: function() {
+        return {
+            innerWorldData: this.worldData,
+            coords: this.worldData.coords
+        }
+    }
 }
 </script>

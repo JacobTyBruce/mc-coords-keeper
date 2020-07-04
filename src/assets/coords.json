@@ -3,12 +3,12 @@
         {
             "name": "worldOne",
             "desc": "desc1",
-            "coords": [43,354,454]
+            "coords": ["location 1",43,354,454]
         },
         {
             "name": "worldTwo",
             "desc": "desc2",
-            "coords": [43,354,454]
+            "coords": ["Location 2",43,354,454]
         }
     ]
 }
