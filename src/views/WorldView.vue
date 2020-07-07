@@ -20,8 +20,11 @@
             </v-row>
             <v-row>
                 <v-list>
-                    <v-list-item v-for="(index, item) in this.$store.state.currentWorld.coords" :key="index">
-                        {{item}}
+                    <v-list-item v-for="(item, index) in this.$store.state.currentWorld.coords" :key="'coord' + index">
+                        {{item.name}}
+                        X: <b>{{item.x}}</b>
+                        Y: <b>{{item.y}}</b>
+                        Z: <b>{{item.z}}</b>
                     </v-list-item>
                 </v-list>
             </v-row>

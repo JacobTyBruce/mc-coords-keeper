@@ -12,7 +12,7 @@
                   <v-list-item-title>{{item.name}}</v-list-item-title>
                   <v-list-item-subtitle>{{item.desc}}</v-list-item-subtitle>
                   <v-list-item-subtitle>
-                    <v-btn :to="{name: 'WorldView', params: {world: item.name}}" v-on:click="this.setWorld(item)">View Coords</v-btn>
+                    <v-btn :to="{name: 'WorldView', params: {world: item.name}}" @click.native="setWorld(item)">View Coords</v-btn>
                   </v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
@@ -28,7 +28,6 @@ export default {
   name: 'Home',
   methods: {
     setWorld: function(world) {
-      alert('hey')
       this.$store.dispatch('commitCurrentWorld', world)
       
     }
