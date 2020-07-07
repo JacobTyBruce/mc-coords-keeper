@@ -7,11 +7,18 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    worldsList: worlds
+    worldsList: worlds,
+    currentWorld: {}
   },
   mutations: {
+    setCurrentWorld: (state, selection) => {
+      state.currentWorld = selection
+    }
   },
   actions: {
+    commitCurrentWorld: (context, payload) => {
+      context.commit("setCurrentWorld" , payload)
+    }
   },
   modules: {
   }

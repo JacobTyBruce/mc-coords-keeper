@@ -14,16 +14,15 @@
                     </v-avatar>
                 </v-col>
                 <v-col>
-                    <h1>{{innerWorldData.title}}</h1>
-                    <p>{{innerWorldData.desc}}</p>
+                    <h1>{{this.$store.state.currentWorld.name}}</h1>
+                    <p>{{this.$store.state.currentWorld.desc}}</p>
                 </v-col>
             </v-row>
             <v-row>
                 <v-list>
-                    <v-list-item> {{this.coords[0]}} </v-list-item>
-                    <v-list-item> {{this.coords[1]}} </v-list-item>
-                    <v-list-item> {{this.coords[2]}} </v-list-item>
-                    <v-list-item> {{this.coords[3]}} </v-list-item>
+                    <v-list-item v-for="(index, item) in this.$store.state.currentWorld.coords" :key="index">
+                        {{item}}
+                    </v-list-item>
                 </v-list>
             </v-row>
         </v-container>
@@ -33,11 +32,10 @@
 <script>
 export default {
     name: 'WorldView',
-    props: ['world','worldData'],
+    props: ['world'],
     data: function() {
         return {
-            innerWorldData: this.worldData,
-            coords: this.worldData.coords
+            
         }
     }
 }

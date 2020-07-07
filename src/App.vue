@@ -15,6 +15,7 @@ const {worlds} = worldsConfig;
 console.log(worlds)
 console.log(worlds[1])
 
+
 export default {
   name: "App",
   components: { Header },

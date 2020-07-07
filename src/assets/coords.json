@@ -8,7 +8,12 @@
         {
             "name": "worldTwo",
             "desc": "desc2",
-            "coords": ["Location 2",43,354,454]
+            "coords": [
+                ["Location 2",43,354,454],
+                ["Location 2",43,354,454],
+                ["Location 2",43,354,454],
+                ["Location 2",43,354,454]
+            ]
         }
     ]
 }
