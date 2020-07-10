@@ -1,4 +1,4 @@
-<template>
+<template :key='reloadKey'>
     <v-main>
       <v-container fill-height fluid>
         <v-row align="center" justify="center">
@@ -26,10 +26,18 @@
 <script>
 export default {
   name: 'Home',
+  data: function () {
+    return {
+      reloadKey: 0
+    }
+  },
   methods: {
     setWorld: function(world) {
       this.$store.dispatch('commitCurrentWorld', world)
       
+    },
+    reloadComponent: function () {
+      this.reloadKey += 1;
     }
   }
 }

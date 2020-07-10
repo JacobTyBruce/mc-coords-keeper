@@ -17,6 +17,9 @@
                     <h1>{{this.$store.state.currentWorld.name}}</h1>
                     <p>{{this.$store.state.currentWorld.desc}}</p>
                 </v-col>
+                <v-col>
+                    <AddCoords />
+                </v-col>
             </v-row>
             <v-row>
                 <v-list>
@@ -33,12 +36,15 @@
 </template>
 
 <script>
+import AddCoords from '../components/AddCoords.vue'
+
 export default {
     name: 'WorldView',
     props: ['world'],
-    data: function() {
-        return {
-            
+    components: {AddCoords},
+    methods: {
+        askCoords: function() {
+            prompt("Hello")
         }
     }
 }
