@@ -18,7 +18,8 @@ for (let i = 0; i < localStorage.length; i++){
 export default new Vuex.Store({
   state: {
     worldsList: [],
-    currentWorld: {}
+    currentWorld: {},
+    isDark: true
   },
   mutations: {
     setCurrentWorld: (state, selection) => {

@@ -1,16 +1,18 @@
 <template ref="header">
-  <v-app-bar app dark>
+  <v-app-bar app color="primary">
     <v-avatar size="50">
       <img
         src="https://www.vhv.rs/dpng/d/439-4398043_bee-minecraft-piglin-hd-png-download.png"
         alt="alt"
       />
     </v-avatar>
-    <v-divider vertical inset></v-divider>
+    <v-divider vertical></v-divider>
     <h1>MCoordinate Keeper</h1>
-    <!-- </router-link> -->
+    <!-- Spacer -->
     <v-spacer></v-spacer>
-    <v-dialog v-model="dialog" max-width="290">
+    
+    <!-- Add World -->
+    <v-menu v-model="dialog" max-width="290" offset-y>
       <template v-slot:activator="{ on }">
         <v-btn color="error" right v-on="on">Add World</v-btn>
       </template>
@@ -32,7 +34,10 @@
           <v-btn color="green darken-1" text @click="dialog = false; addWorld()">Add</v-btn>
         </v-card-actions>
       </v-card>
-    </v-dialog>
+    </v-menu>
+    <v-btn icon to="/settings">
+      <v-icon>mdi-dots-vertical</v-icon>
+    </v-btn>
   </v-app-bar>
 </template>
 

@@ -1,5 +1,5 @@
 <template :key='reloadKey'>
-    <v-main>
+    <v-main color="secondary">
       <v-container fill-height fluid>
         <v-row align="center" justify="center">
           <v-menu offset-y>

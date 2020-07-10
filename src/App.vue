@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :dark="this.$store.state.isDark">
     <Header />
     <router-view />
   </v-app>
@@ -11,9 +11,6 @@ import Header from "@/components/Header";
 export default {
   name: "App",
   components: { Header },
-  mounted: function() {
-    console.log(this.$refs);
-  },
   created: function() {
     for (let i = 0; i < localStorage.length; i++) {
       let currentKey = localStorage.key(i);
@@ -22,6 +19,7 @@ export default {
         this.$store.state.worldsList.push(JSON.parse(currentValue));
       }
     }
+    this.$vuetify.dark = true
   }
 };
 </script>

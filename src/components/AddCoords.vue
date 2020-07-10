@@ -48,7 +48,6 @@ export default {
       addLocation: function(name, x, y, z) {
         // add location to array
         let newLocation = {name: name, x: parseInt(x),y: parseInt(y), z: parseInt(z)};
-        console.log(newLocation);
         // clear data
         this.locationName = "";
         this.x = null;
@@ -60,7 +59,6 @@ export default {
 
         // commit to localStorage - match key in local sotrage with currentWorld name -- grab object in currentWorld and override value in lS?
         let currentWorldName = this.$store.state.currentWorld.name;
-        console.log(currentWorldName);
         for (let i = 0; i < localStorage.length; i++) {
             let currentKey = localStorage.key(i);
             let currentValue = localStorage.getItem(currentKey);
@@ -71,7 +69,7 @@ export default {
             }
         }
         // refresh
-        this.$parent.$forceUpdate
+        this.$emit("update-reload")
     }   
   }
 };
