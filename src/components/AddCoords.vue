@@ -10,15 +10,14 @@
           <v-container>
             <v-row>
               <v-col justify-space-around>
-                <v-text-field label="Location Name" v-model="locationName"></v-text-field>
-                <v-text-field type="number" single-line label="X" v-model="x"></v-text-field>
-                <v-text-field type="number" single-line label="Y" v-model="y"></v-text-field>
-                <v-text-field type="number" single-line label="Z" v-model="z"></v-text-field>
+                <v-text-field label="Location Name" v-model="locationName" :rules="['Required']"></v-text-field>
+                <v-text-field type="number" single-line label="X" v-model="x" :rules="['Required']"></v-text-field>
+                <v-text-field type="number" single-line label="Y" v-model="y" :rules="['Required']"></v-text-field>
+                <v-text-field type="number" single-line label="Z" v-model="z" :rules="['Required']"></v-text-field>
               </v-col>
             </v-row>
           </v-container>
-        </v-form>
-        <v-card-actions>
+          <v-card-actions>
           <v-btn color="red darken-1" text @click="dialog = false" left>Close</v-btn>
           <v-spacer></v-spacer>
           <v-btn
@@ -27,6 +26,8 @@
             @click="dialog = false; addLocation(locationName, x, y, z)"
           >Add</v-btn>
         </v-card-actions>
+        </v-form>
+        
       </v-card>
     </v-dialog>
   </v-row>

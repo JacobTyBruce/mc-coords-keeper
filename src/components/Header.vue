@@ -1,5 +1,6 @@
 <template ref="header">
-  <v-app-bar app color="primary">
+  <v-app-bar app color="primary" >
+    <v-btn to="/" text>
     <v-avatar size="50">
       <img
         src="https://www.vhv.rs/dpng/d/439-4398043_bee-minecraft-piglin-hd-png-download.png"
@@ -7,12 +8,13 @@
       />
     </v-avatar>
     <v-divider vertical></v-divider>
-    <h1>MCoordinate Keeper</h1>
+    <h1>{{appName}}</h1>
+    </v-btn>
     <!-- Spacer -->
     <v-spacer></v-spacer>
     
     <!-- Add World -->
-    <v-menu v-model="dialog" max-width="290" offset-y>
+    <v-menu v-model="dialog" max-width="290" offset-y :close-on-content-click="false">
       <template v-slot:activator="{ on }">
         <v-btn color="error" right v-on="on">Add World</v-btn>
       </template>
@@ -48,7 +50,8 @@ export default {
     return {
       dialog: false,
       worldName: "",
-      worldDesc: ""
+      worldDesc: "",
+      appName: "MCLocation Keeper"
     };
   },
   methods: {

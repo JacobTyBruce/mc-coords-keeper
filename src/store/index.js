@@ -19,7 +19,7 @@ export default new Vuex.Store({
   state: {
     worldsList: [],
     currentWorld: {},
-    isDark: true
+    isDark: false
   },
   mutations: {
     setCurrentWorld: (state, selection) => {
@@ -30,17 +30,32 @@ export default new Vuex.Store({
     },
     addLocation: (state, location) => {
       state.currentWorld.coords.push(location);
+    },
+    setOppDark: (state) => {
+      state.isDark = !state.isDark;
+    },
+    setDarkMode: (state, darkSetting) => {
+      state.isDark = darkSetting;
     }
   },
   actions: {
     commitCurrentWorld: (context, payload) => {
-      context.commit("setCurrentWorld" , payload)
+      context.commit("setCurrentWorld" , payload);
     },
     commitNewWorld: (context, world) => {
-      context.commit("addWorld", world)
+      context.commit("addWorld", world);
     },
     commitNewLocation: (context, location) => {
-      context.commit("addLocation", location)
+      context.commit("addLocation", location);
+    },
+    commitOppDarkMode: (context) => {
+      context.commit("setOppDark");
+      let currentDarkVal = JSON.parse(window.localStorage.getItem("darkApp"));
+      let oppDarkVal = !currentDarkVal;
+      window.localStorage.setItem("darkApp", JSON.stringify(oppDarkVal))
+    },
+    commitSetDarkMode: (context, darkSetting) => {
+      context.commit("setDarkMode", darkSetting);
     }
   },
   modules: {

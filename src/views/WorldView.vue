@@ -22,22 +22,29 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col>
+        <v-col cols="12">
           <v-list text-center>
             <v-list-item
               v-for="(item, index) in this.$store.state.currentWorld.coords"
               :key="'coord' + index"
             >
-              <v-card flat>
-                <v-card-title>{{item.name}}</v-card-title>
-                <v-card-subtitle>
-                  X:
-                  <b>{{item.x}}</b> Y:
-                  <b>{{item.y}}</b> Z:
-                  <b>{{item.z}}</b>
-                </v-card-subtitle>
+              <v-card flat width="100%">
+                <v-container>
+                  <v-row>
+                    <v-col cols="6">
+                      <v-card-title>{{item.name}}</v-card-title>
+                      <v-card-subtitle>
+                        X:<b>{{item.x}}</b>
+                        Y:<b>{{item.y}}</b>
+                        Z: <b>{{item.z}}</b>
+                      </v-card-subtitle>
+                    </v-col>
+                    <v-col cols="6">
+                      <v-btn color="red" depressed outlined small justify-end>Edit</v-btn>
+                    </v-col>
+                  </v-row>
+                </v-container>
               </v-card>
-              
             </v-list-item>
           </v-list>
         </v-col>
@@ -54,9 +61,9 @@ export default {
   props: ["world"],
   components: { AddCoords },
   data: function() {
-      return {
-          reloadKey: 0
-      }
+    return {
+      reloadKey: 0
+    };
   }
 };
 </script>

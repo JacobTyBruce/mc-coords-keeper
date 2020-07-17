@@ -21,11 +21,14 @@
                    <v-card>
                        <v-card-title>Theme Settings</v-card-title>
                        <v-divider></v-divider>
-                       <v-switch v-model="darkMode" :label="`Dark Mode`"></v-switch>
+                       <v-switch v-model="darkMode" :label="`Dark Mode`" @change="changeDark()"></v-switch>
+                       <v-card-subtitle> <b> More Coming Soon (Custom Themes!) </b> </v-card-subtitle>
                    </v-card>
                 </v-col>
                 <v-col cols="2">
-                    ds
+                    <v-card>
+                        <b> Theme Display Coming Soon </b>
+                    </v-card>
                 </v-col>
             </v-row>
             <v-row></v-row>
@@ -34,6 +37,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
     name: 'Settings',
     data: function() {
@@ -41,14 +46,10 @@ export default {
             darkMode: this.$store.state.isDark
         }
     },
-    computed: {
-        // setTheme() {
-        //     if (this.darkMode == true) {
-        //         return (this.$store.state.isDark = true);
-        //     } else {
-        //         return (this.$store.state.isDark = false);
-        //     }
-        // }
+    methods: {
+        ...mapActions({
+            changeDark: 'commitOppDarkMode'
+        })
     }
 
 }
