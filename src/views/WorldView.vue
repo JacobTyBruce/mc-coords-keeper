@@ -8,7 +8,7 @@
         <v-col>
           <v-avatar color="white" size="100" tile>
             <img
-              src="https://vignette.wikia.nocookie.net/minecraft/images/f/fe/GrassNew.png/revision/latest?cb=20190903234415"
+              :src='this.$store.state.defaultImg'
               alt="alt"
             />
           </v-avatar>
@@ -40,7 +40,8 @@
                       </v-card-subtitle>
                     </v-col>
                     <v-col cols="6">
-                      <v-btn color="red" depressed outlined small justify-end>Edit</v-btn>
+                      <EditCoords v-bind:location="item" />
+                      <DeleteCoords v-bind:location="item" />
                     </v-col>
                   </v-row>
                 </v-container>
@@ -49,21 +50,36 @@
           </v-list>
         </v-col>
       </v-row>
+      <v-row>
+        <v-col>
+          <DeleteWorld />
+        </v-col>
+      </v-row>
     </v-container>
   </v-main>
 </template>
 
 <script>
 import AddCoords from "../components/AddCoords.vue";
+import DeleteWorld from "../components/DeleteWorld.vue"
+import EditCoords from "../components/EditCoords.vue"
+import DeleteCoords from "../components/DeleteCoords"
 
 export default {
   name: "WorldView",
   props: ["world"],
-  components: { AddCoords },
+  components: { AddCoords, DeleteWorld, EditCoords, DeleteCoords },
   data: function() {
     return {
-      reloadKey: 0
+      reloadKey: 0,
     };
+  },
+  beforeCreate: function() {
+    if (this.$store.state.currentWorld == {}) {
+      this.$router.push('/')
+    } else {
+      return
+    }
   }
 };
 </script>

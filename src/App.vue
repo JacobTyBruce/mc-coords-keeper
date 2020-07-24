@@ -26,7 +26,7 @@ export default {
       let currentKey = localStorage.key(i);
       let currentValue = localStorage.getItem(currentKey);
       if (currentKey.includes("World-")) {
-        this.$store.state.worldsList.push(JSON.parse(currentValue));
+        this.$store.dispatch('commitNewWorld',JSON.parse(currentValue));
       }
     }
     this.$vuetify.theme.dark = this.$store.state.isDark;

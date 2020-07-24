@@ -29,7 +29,7 @@ Vue.use(VueRouter)
     path: '/:world',
     name: 'WorldView',
     component: WorldView,
-    props: true
+    props: true,
   }
 ]
 
