@@ -42,10 +42,14 @@ export default new Vuex.Store({
       state.currentWorld.coords.push(location);
     },
     editLocation: (state, location) => {
+      // variables
       // current world coords array
       let currentLocations = state.currentWorld.coords;
       // new coords object name
       let newLocationName = location.name;
+
+      // operations
+
     },
     deleteLocation: (state, location) => {
       let world = state.currentWorld
