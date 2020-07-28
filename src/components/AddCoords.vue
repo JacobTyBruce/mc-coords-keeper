@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" max-width="290">
+    <v-dialog v-model="dialog" max-width="25%">
       <template v-slot:activator="{ on }">
         <v-btn color="success" dark v-on="on">Add Location</v-btn>
       </template>
