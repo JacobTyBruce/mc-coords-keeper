@@ -42,19 +42,20 @@ export default new Vuex.Store({
       state.currentWorld.coords.push(location);
     },
     editLocation: (state, location) => {
+      location
       // variables
-      let localStorageKey = "World-" + state.currentWorld.name
+      let localStorageKey = "World-" + state.currentWorld.name;
       // current world coords array in State
       let currentStateLocations = state.currentWorld.coords;
       // current worlds coords array in LS
-      let currentLocalLocations = JSON.parse(window.localStorage.getItem(localStorageKey))
+      let currentLocalLocations = JSON.parse(window.localStorage.getItem(localStorageKey));
 
       // operations
       // need to save to session and LS, do session first bc LS can be done in bg and anytime before app close
 
       // editing current session data
       // iterate over each obj in coords array, then match and change coords when found
-      currentStateLocations.forEach(locationObj => {
+      currentStateLocations.forEach(function(locationObj) {
         if (locationObj.name == location.name) {
           locationObj.x = location.x
           locationObj.y = location.y
@@ -64,11 +65,13 @@ export default new Vuex.Store({
       // editing LS data
       currentLocalLocations.coords.forEach(locationObj => {
         if (locationObj.name == location.name) {
-          
-         /* let locationParsed = JSON.stringify(location)
-          window.localStorage.setItem(localStorageKey, locationParsed )*/
+          locationObj.x = location.x
+          locationObj.y = location.y
+          locationObj.z = location.z
         }
       })
+      window.localStorage.setItem(localStorageKey, JSON.stringify(currentLocalLocations))
+
     },
     deleteLocation: (state, location) => {
       let world = state.currentWorld
