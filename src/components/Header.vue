@@ -51,7 +51,7 @@ export default {
       dialog: false,
       worldName: "",
       worldDesc: "",
-      appName: "MCLocation Keeper"
+      appName: "MC Coordinate Keeper"
     };
   },
   methods: {

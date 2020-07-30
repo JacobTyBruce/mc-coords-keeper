@@ -16,7 +16,7 @@
                       <v-col>
                           <v-list>
                               <v-list-item>{{currentWorld.name}}</v-list-item>
-                              <v-list-item v-if="currentWorld.desc.length > 0">{{currentWorld.desc}}</v-list-item>
+                              <v-list-item v-if="currentWorld.desc.length > 0" text-subtitle>{{currentWorld.desc}}</v-list-item>
                               <v-list-item v-if="currentWorld.desc.length == 0">No Description</v-list-item>
                               <v-list-item>Locations - {{currentWorld.coords.length}}</v-list-item>
                           </v-list>
@@ -26,7 +26,7 @@
           </v-card-text>
           <v-card-actions>
               <v-container>
-                  <v-row><v-btn color='info' @click="dialog = false"> No, take me back! </v-btn><v-spacer></v-spacer><v-btn color='error' @click.stop='deleteWorld()'>Yes, Delete</v-btn></v-row>
+                  <v-row><v-btn color='error' outlined @click="dialog = false"> No, take me back! </v-btn><v-spacer></v-spacer><v-btn color='error' @click.stop='deleteWorld()'>Yes, Delete</v-btn></v-row>
               </v-container>
           </v-card-actions>
       </v-card>

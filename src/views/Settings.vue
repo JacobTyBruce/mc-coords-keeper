@@ -26,9 +26,7 @@
                    </v-card>
                 </v-col>
                 <v-col cols="2">
-                    <v-card>
-                        <b> Theme Display Coming Soon </b>
-                    </v-card>
+                    <v-btn color="error" outlined href="https://github.com/JacobTyBruce/mc-coords-keeper/issues/new" target="_blank"> Report A Problem</v-btn>
                 </v-col>
             </v-row>
             <v-row></v-row>

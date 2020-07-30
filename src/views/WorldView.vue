@@ -31,7 +31,7 @@
               <v-card flat width="100%">
                 <v-container>
                   <v-row>
-                    <v-col cols="6">
+                    <v-col cols="8">
                       <v-card-title>{{item.name}}</v-card-title>
                       <v-card-subtitle>
                         X:<b>{{item.x}}</b>
@@ -39,8 +39,10 @@
                         Z: <b>{{item.z}}</b>
                       </v-card-subtitle>
                     </v-col>
-                    <v-col cols="6">
+                    <v-col cols="2" align-self="center">
                       <EditCoords v-bind:location="item" />
+                    </v-col>
+                    <v-col cols="2" align-self="center">
                       <DeleteCoords v-bind:location="item" />
                     </v-col>
                   </v-row>

@@ -1,4 +1,4 @@
-# coords-mc
+# Minecraft Coordinate Keeper (MCC)
 
 ## Project setup
 ```
