@@ -1,7 +1,9 @@
 {
-  "name": "coords-mc",
+  "name": "minecraft-coordinate-keeper",
   "version": "0.8.2",
+  "author": "Jacob Bruce <jacobbrucedev@gmail.com> (https://www.jacobtbruce.com)",
   "private": true,
+  "license": "ISC",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -15,6 +17,7 @@
   "main": "background.js",
   "dependencies": {
     "core-js": "^3.6.5",
+    "electron-json-storage": "^4.2.0",
     "fs": "0.0.1-security",
     "jquery": "^3.5.1",
     "vue": "^2.6.11",

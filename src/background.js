@@ -19,13 +19,13 @@ function createWindow() {
   win = new BrowserWindow({
     width: 1200,
     height: 800,
-    title: "Minecraft Coordinate Keeper",
+    //title: "Minecraft Coordinate Keeper",
     //icon: path.join(__static, 'icon.png'),
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
-      devTools: false
+      devTools: true
     }
   })
 

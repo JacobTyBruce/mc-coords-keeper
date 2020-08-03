@@ -44,6 +44,9 @@
 </template>
 
 <script>
+//const storage = require('electron-json-storage');
+//console.log(storage.getDefaultDataPath())
+
 export default {
   name: "Header",
   data: function() {
@@ -51,7 +54,7 @@ export default {
       dialog: false,
       worldName: "",
       worldDesc: "",
-      appName: "MC Coordinate Keeper"
+      appName: "MC Coordinate Keeper",
     };
   },
   methods: {
@@ -75,6 +78,6 @@ export default {
       // push to new world
       this.$router.push("/" + worldName);
     }
-  }
+  },
 };
 </script>
