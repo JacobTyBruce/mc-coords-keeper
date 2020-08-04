@@ -6,10 +6,11 @@ Vue.use(Vuetify);
 export default new Vuetify({
     theme: {
         themes: {
+            // made by Haley G. Instagram: @haley.21.0
             light: {
-                primary: "#FF5733",
+                primary: "#4a6f28",
                 secondary: "#2196f3",
-                accent: "#009688",
+                accent: "#5b8b32",
                 error: "#f44336",
                 warning: "#ffc107",
                 info: "#607d8b",

@@ -1,6 +1,6 @@
 <template ref="header">
   <v-app-bar app color="primary" >
-    <v-btn to="/" text>
+    <v-btn to="/" text color="white">
     <v-avatar size="50">
       <img
         src="https://www.vhv.rs/dpng/d/439-4398043_bee-minecraft-piglin-hd-png-download.png"

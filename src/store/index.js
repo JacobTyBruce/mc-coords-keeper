@@ -1,7 +1,40 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+const app = window.require('electron').remote.app
+const fs = window.require('fs')
+//const path = window.require('path')
+const appDirPath = app.getAppPath('userData')
+const dbFilePath = appDirPath + "\\db.txt"
 
 Vue.use(Vuex)
+
+// check for db
+fs.access(dbFilePath, fs.constants.F_OK, (err) => {
+  if (err) {
+    // if err make file
+    fs.writeFile(dbFilePath, "Test file", (err) => {
+      if (err) {
+        console.log("File not created!")
+      }
+      else {
+        console.log("File added!")
+      }
+    })
+  }
+  else {
+    console.log("File found!")
+  }
+})
+
+fs.writeFile(dbFilePath, "Test file", (err) => {
+  if (err) {
+    alert(err)
+  }
+  else {
+    alert("added!")
+  }
+})
+
 
 export default new Vuex.Store({
   state: {
