@@ -1,39 +1,21 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-const app = window.require('electron').remote.app
-const fs = window.require('fs')
-//const path = window.require('path')
-const appDirPath = app.getAppPath('userData')
-const dbFilePath = appDirPath + "\\db.txt"
+import Vue from 'vue';
+import Vuex from 'vuex';
+//const app = window.require('electron').remote.app
+const storage = window.require('electron-json-storage');
+//const appDirPath = storage.getDefaultDataPath();
 
-Vue.use(Vuex)
+if (storage.has('worlds', function(error, hasKey) {
+  if (error) {
+    console.log("File not found...setting now");
+    //storage.set("worlds", {isWorking: true}, err => {if (err) {throw err}});
+    //console.log("File Added!");
+  }
+  if (hasKey) {
+    console.log("File already set...continue");
+  }
+}));
 
-// check for db
-fs.access(dbFilePath, fs.constants.F_OK, (err) => {
-  if (err) {
-    // if err make file
-    fs.writeFile(dbFilePath, "Test file", (err) => {
-      if (err) {
-        console.log("File not created!")
-      }
-      else {
-        console.log("File added!")
-      }
-    })
-  }
-  else {
-    console.log("File found!")
-  }
-})
-
-fs.writeFile(dbFilePath, "Test file", (err) => {
-  if (err) {
-    alert(err)
-  }
-  else {
-    alert("added!")
-  }
-})
+Vue.use(Vuex);
 
 
 export default new Vuex.Store({
