@@ -1,21 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-//const app = window.require('electron').remote.app
-const storage = window.require('electron-json-storage');
-//const appDirPath = storage.getDefaultDataPath();
-
-if (storage.has('worlds', function(error, hasKey) {
-  if (error) {
-    console.log("File not found...setting now");
-    //storage.set("worlds", {isWorking: true}, err => {if (err) {throw err}});
-    //console.log("File Added!");
-  }
-  if (hasKey) {
-    console.log("File already set...continue");
-  }
-}));
 
 Vue.use(Vuex);
+
+// setup store
+const Storage = window.require('electron-store');
+const storage = new Storage()
+storage.store = {
+  
+}
 
 
 export default new Vuex.Store({
@@ -26,6 +19,9 @@ export default new Vuex.Store({
     defaultImg: 'https://vignette.wikia.nocookie.net/minecraft/images/f/fe/GrassNew.png/revision/latest?cb=20190903234415',
   },
   mutations: {
+    setAllWorlds: (state, worldList) => {
+      state.worldsList = worldList;
+    },
     setCurrentWorld: (state, selection) => {
       state.currentWorld = selection;
     },
@@ -52,10 +48,6 @@ export default new Vuex.Store({
       let currentStateLocations = state.currentWorld.coords;
       // current worlds coords array in LS
       let currentLocalLocations = JSON.parse(window.localStorage.getItem(localStorageKey));
-
-      // operations
-      // need to save to session and LS, do session first bc LS can be done in bg and anytime before app close
-
       // editing current session data
       // iterate over each obj in coords array, then match and change coords when found
       currentStateLocations.forEach(function(locationObj) {
@@ -95,6 +87,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    commitAllWorlds: (context, worlds) => {
+      context.commit("setAllWorlds", worlds)
+    },
     commitCurrentWorld: (context, payload) => {
       context.commit("setCurrentWorld" , payload);
     },
