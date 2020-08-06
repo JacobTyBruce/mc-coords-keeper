@@ -5,11 +5,23 @@ Vue.use(Vuex);
 
 // setup store
 const Storage = window.require('electron-store');
-const storage = new Storage()
-storage.store = {
-  
-}
+// worlds schema
 
+const schema = {
+  world: {
+    "type": "object",
+    "properties": {
+      "name": {"type": "string"},
+      "desc": {"type": "string"},
+      "coords": {"type": "array"}
+    }
+  }
+}
+// declare world storage
+const worldStorage = new Storage({schema: schema, name: 'worlds'})
+
+// declare User Settings Storage
+const userSettings = new Storage({name: 'user-settings'})
 
 export default new Vuex.Store({
   state: {
@@ -19,29 +31,28 @@ export default new Vuex.Store({
     defaultImg: 'https://vignette.wikia.nocookie.net/minecraft/images/f/fe/GrassNew.png/revision/latest?cb=20190903234415',
   },
   mutations: {
-    setAllWorlds: (state, worldList) => {
-      state.worldsList = worldList;
-    },
     setCurrentWorld: (state, selection) => {
       state.currentWorld = selection;
     },
     addWorld: (state, world) => {
       state.worldsList.push(world);
+      worldStorage.set(world.name, world)
     },
     deleteWorld: (state, world) => {
-      //state.worldsList = state.worldsList.filter( item => {item.name != world.name} );
       let filtered = [];
       let toDelete = {}
       state.worldsList.forEach( item => { if(item.name != world.name) {filtered.push(item)} else {toDelete = item} } );
       state.worldsList = filtered;
       window.localStorage.removeItem("World-"+toDelete.name)
       state.currentWorld = {};
+      worldStorage.delete(world.name)
     },
     addLocation: (state, location) => {
       state.currentWorld.coords.push(location);
+      let currentObj = worldStorage.get(state.currentWorld.name) 
+      currentObj.coords.push(location)
     },
     editLocation: (state, location) => {
-      location
       // variables
       let localStorageKey = "World-" + state.currentWorld.name;
       // current world coords array in State
@@ -66,7 +77,14 @@ export default new Vuex.Store({
         }
       })
       window.localStorage.setItem(localStorageKey, JSON.stringify(currentLocalLocations))
-
+      // edit storage data
+      worldStorage.get(state.currentWorld.name).coords.forEach(locationObj => {
+        if (locationObj.name == location.name) {
+          locationObj.x = location.x
+          locationObj.y = location.y
+          locationObj.z = location.z
+        }
+      })
     },
     deleteLocation: (state, location) => {
       let world = state.currentWorld
@@ -78,18 +96,20 @@ export default new Vuex.Store({
       let lsItem = JSON.parse(window.localStorage.getItem("World-"+world.name))
       lsItem.coords = filtered
       window.localStorage.setItem("World-"+world.name, JSON.stringify(lsItem))
+      // storage
+      let storageItem = worldStorage.get(state.currentWorld.name)
+      storageItem.coords = filtered
     },
     setOppDark: (state) => {
       state.isDark = !state.isDark;
+      userSettings.set('dark', !state.isDark)
     },
     setDarkMode: (state, darkSetting) => {
       state.isDark = darkSetting;
+      userSettings.set('dark', state.isDark)
     }
   },
   actions: {
-    commitAllWorlds: (context, worlds) => {
-      context.commit("setAllWorlds", worlds)
-    },
     commitCurrentWorld: (context, payload) => {
       context.commit("setCurrentWorld" , payload);
     },
