@@ -24,7 +24,7 @@
 </template>
 
 <script>
-// const notifier = window.require('node-notifier'); module not working with Windows 10, need to find fix or implement specfic OS notifications
+const notifier = window.require('node-notifier'); //module not working with Windows 10, need to find fix or implement specfic OS notifications
 
 export default {
   name: "ImportWorld",
@@ -56,13 +56,11 @@ export default {
                   errorCount += 1;
               }
               if (errorCount === 0) {
-                  //notifier.notify({appName: "mcc-keeper", title: 'Success!', message: 'All World(s) Added Successfully!'})
-                  const successNotification = new Notification('Success!', {body: 'All World(s) Added Successfully!'})
-                  successNotification.show()
+                  notifier.notify({appName: "com.jacobtbruce.mcc", title: 'Success!', message: 'All World(s) Added Successfully!'})
+                  //const successNotification = new Notification('Success!', {body: 'All World(s) Added Successfully!'})
               } else {
-                  //notifier.notify({appName: "mcc-keeper", title: 'Uh Oh!', message: successCount + " world(s) imported correctly, but " + errorCount + " world(s) failed to upload!"})
-                  const errorNotification = new Notification('Uh Oh!', {body: successCount + " world(s) imported correctly, but " + errorCount + " world(s) failed to upload!"})
-                  errorNotification.show()
+                  notifier.notify({appName: "com.jacobtbruce.mcc", title: 'Uh Oh!', message: successCount + " world(s) imported correctly, and " + errorCount + " world(s) failed to upload!",})
+                  //const errorNotification = new Notification('Uh Oh!', {body: successCount + " world(s) imported correctly, but " + errorCount + " world(s) failed to upload!"})
               }
           })
       };
