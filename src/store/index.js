@@ -23,12 +23,20 @@ const worldStorage = new Storage({schema: schema, name: 'worlds'})
 // declare User Settings Storage
 const userSettings = new Storage({name: 'user-settings'})
 
+export {worldStorage, userSettings}
+
+// for all operations that require saving to different locations depending on location, 
+// maybe make one source of truth inside each function with a variable so that no
+// data gets set different from eahc other in case of error or faulty programming in future
+// as seen with dark mode bug in previous version
+
 export default new Vuex.Store({
   state: {
     worldsList: [],
     currentWorld: {},
     isDark: false,
     defaultImg: 'https://vignette.wikia.nocookie.net/minecraft/images/f/fe/GrassNew.png/revision/latest?cb=20190903234415',
+    isElectron: process.env.IS_ELECTRON,
   },
   mutations: {
     setCurrentWorld: (state, selection) => {
@@ -101,12 +109,19 @@ export default new Vuex.Store({
       storageItem.coords = filtered
     },
     setOppDark: (state) => {
+      // state switch
       state.isDark = !state.isDark;
-      userSettings.set('dark', !state.isDark)
+      // LS switch
+      let currentDarkVal = JSON.parse(window.localStorage.getItem("darkApp"));
+      let oppDarkVal = !currentDarkVal;
+      window.localStorage.setItem("darkApp", JSON.stringify(oppDarkVal))
+      // app data switch
+      let currentAppDark = userSettings.get('darkMode')
+      userSettings.set('darkMode', !currentAppDark)
     },
     setDarkMode: (state, darkSetting) => {
       state.isDark = darkSetting;
-      userSettings.set('dark', state.isDark)
+      userSettings.set('darkMode', state.isDark)
     }
   },
   actions: {
@@ -130,9 +145,6 @@ export default new Vuex.Store({
     },
     commitOppDarkMode: (context) => {
       context.commit("setOppDark");
-      let currentDarkVal = JSON.parse(window.localStorage.getItem("darkApp"));
-      let oppDarkVal = !currentDarkVal;
-      window.localStorage.setItem("darkApp", JSON.stringify(oppDarkVal))
     },
     commitSetDarkMode: (context, darkSetting) => {
       context.commit("setDarkMode", darkSetting);
