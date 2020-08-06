@@ -1,6 +1,6 @@
 {
   "name": "minecraft-coordinate-keeper",
-  "version": "0.9.1",
+  "version": "0.9.1-notif-test",
   "author": "Jacob Bruce <jacobbrucedev@gmail.com> (https://www.jacobtbruce.com)",
   "private": true,
   "license": "ISC",
@@ -20,6 +20,7 @@
     "electron-store": "^6.0.0",
     "fs": "0.0.1-security",
     "jquery": "^3.5.1",
+    "node-notifier": "^7.0.2",
     "vue": "^2.6.11",
     "vue-cli": "^2.9.6",
     "vue-router": "^3.2.0",

@@ -12,7 +12,7 @@
     </v-btn>
     <!-- Spacer -->
     <v-spacer></v-spacer>
-    
+    <ImportWorld />
     <!-- Add World -->
     <v-menu v-model="dialog" max-width="290" offset-y :close-on-content-click="false">
       <template v-slot:activator="{ on }">
@@ -44,11 +44,11 @@
 </template>
 
 <script>
-//const storage = require('electron-json-storage');
-//console.log(storage.getDefaultDataPath())
+import ImportWorld from "./ImportWorld.vue"
 
 export default {
   name: "Header",
+  components: {ImportWorld},
   data: function() {
     return {
       dialog: false,

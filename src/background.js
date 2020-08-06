@@ -14,6 +14,8 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
 
+app.setAppUserModelId("mcc-keeper");
+
 function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
@@ -21,7 +23,7 @@ function createWindow() {
     height: 800,
     title: "Minecraft Coordinate Keeper",
     center: true,
-    titleBarStyle: 'hidden',
+    //titleBarStyle: 'hidden',
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
@@ -29,7 +31,7 @@ function createWindow() {
       devTools: true
     }
   })
-  win.setMenuBarVisibility(false)
+  //win.setMenuBarVisibility(false)
 
   win.on('page-title-updated', (evt) => {
     evt.preventDefault();
