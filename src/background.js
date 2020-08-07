@@ -1,10 +1,10 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain } from 'electron'
-import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
-import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
-import path from 'path'
-import { autoUpdater } from "electron-updater"
+import { app, protocol, BrowserWindow, ipcMain } from 'electron';
+import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
+import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
+import path from 'path';
+import { autoUpdater } from "electron-updater";
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 
@@ -35,7 +35,7 @@ function createWindow() {
       devTools: true
     }
   })
-  win.setMenuBarVisibility(false)
+  //win.setMenuBarVisibility(false)
 
   win.on('page-title-updated', (evt) => {
     evt.preventDefault();

@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="25%" transition="dialog-transition">
     <template v-slot:activator="{ on }">
-      <v-btn color="orange" depressed outlined small v-on="on">Edit</v-btn>
+      <v-btn color="orange" depressed outlined v-on="on" medium><v-icon dark medium left>mdi-wrench</v-icon>Edit</v-btn>
     </template>
     <v-card>
       <v-card-title>Edit Location</v-card-title>

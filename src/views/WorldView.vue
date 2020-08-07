@@ -1,6 +1,6 @@
 <template>
   <v-main :key="reloadKey" v-on:update-reload="reloadKey += 1">
-    <v-btn color="success" to="/">
+    <v-btn color="success" to="/" class='ma-4'>
       <v-icon mr-2>mdi-arrow-left-bold-outline</v-icon>Back
     </v-btn>
     <v-container>
@@ -10,6 +10,11 @@
             <img
               :src='this.$store.state.defaultImg'
               alt="alt"
+              v-if="this.$store.state.currentWorld.img == null"
+              />
+            <img
+              :src='this.$store.state.currentWorld.img'
+              alt="alt"
             />
           </v-avatar>
         </v-col>
@@ -17,7 +22,8 @@
           <h1>{{this.$store.state.currentWorld.name}}</h1>
           <p>{{this.$store.state.currentWorld.desc}}</p>
         </v-col>
-        <v-col>
+        <v-col class='text-center'>
+          <EditWorld />
           <AddCoords />
         </v-col>
       </v-row>
@@ -46,6 +52,9 @@
                       <DeleteCoords v-bind:location="item" />
                     </v-col>
                   </v-row>
+                  <v-row>
+                    <v-divider></v-divider>
+                  </v-row>
                 </v-container>
               </v-card>
             </v-list-item>
@@ -57,6 +66,9 @@
           <DeleteWorld />
         </v-col>
       </v-row>
+      <v-row>
+        <ExportWorld />
+      </v-row>
     </v-container>
   </v-main>
 </template>
@@ -65,12 +77,14 @@
 import AddCoords from "../components/AddCoords.vue";
 import DeleteWorld from "../components/DeleteWorld.vue"
 import EditCoords from "../components/EditCoords.vue"
-import DeleteCoords from "../components/DeleteCoords"
+import DeleteCoords from "../components/DeleteCoords.vue"
+import ExportWorld from "../components/ExportWorld.vue"
+import EditWorld from "../components/EditWorld.vue"
 
 export default {
   name: "WorldView",
   props: ["world"],
-  components: { AddCoords, DeleteWorld, EditCoords, DeleteCoords },
+  components: { AddCoords, DeleteWorld, EditCoords, DeleteCoords, ExportWorld, EditWorld },
   data: function() {
     return {
       reloadKey: 0,

@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" max-width="25%">
       <template v-slot:activator="{ on }">
-        <v-btn color="success" dark v-on="on">Add Location</v-btn>
+        <v-btn color="success" dark v-on="on">Add Location <v-icon medium right>mdi-plus</v-icon></v-btn>
       </template>
       <v-card>
         <v-card-title class="headline">Add Location</v-card-title>

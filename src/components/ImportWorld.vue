@@ -1,7 +1,7 @@
 <template>
-  <v-menu v-model="dialog" width="400" max-width="500" offset-y :close-on-content-click="false">
+  <v-menu v-model="dialog" width="400" max-width="600" offset-y :close-on-content-click="false">
     <template v-slot:activator="{ on }">
-      <v-btn color="info" right v-on="on">Import World</v-btn>
+      <v-btn color="info" left v-on="on" class="mr-4">Import World</v-btn>
     </template>
     <v-card>
       <v-card-title class="headline">Import World</v-card-title>
@@ -9,7 +9,7 @@
         <v-container>
           <v-row>
             <v-col>
-              <v-file-input padding="10px" v-model="upload"></v-file-input>
+              <v-file-input padding="10px" prepend-icon="mdi-earth" v-model="upload"></v-file-input>
             </v-col>
           </v-row>
         </v-container>
@@ -17,7 +17,7 @@
       <v-card-actions>
         <v-btn color="red darken-1" text @click="dialog = false" left>Close</v-btn>
         <v-spacer></v-spacer>
-        <v-btn color="green darken-1" text @click="dialog = false; checkWorld()">Upload</v-btn>
+        <v-btn color="green darken-1" text @click="dialog = false; checkWorld();">Upload</v-btn>
       </v-card-actions>
     </v-card>
   </v-menu>
@@ -63,6 +63,7 @@ export default {
                   //const errorNotification = new Notification('Uh Oh!', {body: successCount + " world(s) imported correctly, but " + errorCount + " world(s) failed to upload!"})
               }
           })
+          this.upload = null
       };
         
     },

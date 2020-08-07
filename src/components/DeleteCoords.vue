@@ -6,7 +6,7 @@
         transition="dialog-transition"
     >
     <template v-slot:activator="{ on }">
-        <v-btn color="red" depressed outlined small v-on="on">Delete</v-btn>
+        <v-btn color="red" depressed outlined medium v-on="on">Delete<v-icon dark medium right>mdi-delete</v-icon></v-btn>
       </template> 
       <v-card>
           <v-card-title>Delete Location</v-card-title>

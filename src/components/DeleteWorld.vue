@@ -26,7 +26,7 @@
           </v-card-text>
           <v-card-actions>
               <v-container>
-                  <v-row><v-btn color='error' outlined @click="dialog = false"> No, take me back! </v-btn><v-spacer></v-spacer><v-btn color='error' @click.stop='deleteWorld()'>Yes, Delete</v-btn></v-row>
+                  <v-row><v-btn color='error' outlined @click="dialog = false" medium> <v-icon left small>mdi-arrow-left</v-icon> No, take me back! </v-btn><v-spacer></v-spacer><v-btn color='error' @click.stop='deleteWorld()'>Yes, Delete <v-icon right medium>mdi-delete-forever</v-icon></v-btn></v-row>
               </v-container>
           </v-card-actions>
       </v-card>

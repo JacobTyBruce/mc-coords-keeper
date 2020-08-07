@@ -1,14 +1,14 @@
 <template ref="header">
-  <v-app-bar app color="primary" >
-    <v-btn to="/" text color="white">
-    <v-avatar size="50">
-      <img
-        src="https://www.vhv.rs/dpng/d/439-4398043_bee-minecraft-piglin-hd-png-download.png"
-        alt="alt"
-      />
-    </v-avatar>
-    <v-divider vertical></v-divider>
-    <h1>{{appName}}</h1>
+  <v-app-bar app color="primary">
+    <v-btn to="/" text color="white" title height="50" active-class="no-bg">
+      <v-avatar height="50" left>
+        <img
+          src="https://www.vhv.rs/dpng/d/439-4398043_bee-minecraft-piglin-hd-png-download.png"
+          alt="alt"
+        />
+      </v-avatar>
+      <v-divider vertical class="mx-2"></v-divider>
+      <h1>{{appName}}</h1>
     </v-btn>
     <!-- Spacer -->
     <v-spacer></v-spacer>
@@ -26,6 +26,7 @@
               <v-col justify-space-around>
                 <v-text-field label="World Name" v-model="worldName"></v-text-field>
                 <v-text-field label="Description" v-model="worldDesc"></v-text-field>
+                <v-file-input label="Upload Image" v-model="worldImg" prepend-icon="mdi-image"></v-file-input>
               </v-col>
             </v-row>
           </v-container>
@@ -43,41 +44,74 @@
   </v-app-bar>
 </template>
 
+<style>
+.no-bg::before {
+  background: none !important;
+}
+</style>
+
 <script>
-import ImportWorld from "./ImportWorld.vue"
+import ImportWorld from "./ImportWorld.vue";
 
 export default {
   name: "Header",
-  components: {ImportWorld},
-  data: function() {
+  components: { ImportWorld },
+  data: function () {
     return {
       dialog: false,
       worldName: "",
       worldDesc: "",
+      worldImg: null,
       appName: "MC Coordinate Keeper",
     };
   },
   methods: {
-    addWorld: function() {
+    addWorld: function () {
       // init vars
       let worldName = this.worldName;
       let worldDesc = this.worldDesc;
+      let worldImg = this.worldImg;
+
+      // convert image to data uri
+      function readFile() {
+        const fr = new FileReader();
+
+        return new Promise((resolve, reject) => {
+          fr.onerror = () => {
+            fr.abort();
+            reject(new DOMException("Problem parsing input file."));
+          };
+
+          fr.onload = () => {
+            resolve(fr.result);
+          };
+          fr.readAsDataURL(worldImg);
+        }).then((value) => worldImg = value)
+      }
+      readFile()
+
       // JSON obj
       let jsonWorld = JSON.stringify({
         name: worldName,
         desc: worldDesc,
-        coords: []
+        img: worldImg,
+        coords: [],
       });
       window.localStorage.setItem("World-" + worldName, jsonWorld);
       // add to Vuex
       // non-JSON obj
-      let nonJsonWorld = { name: worldName, desc: worldDesc, coords: [] };
+      let nonJsonWorld = {
+        name: worldName,
+        desc: worldDesc,
+        img: worldImg,
+        coords: [],
+      };
       this.$store.dispatch("commitNewWorld", nonJsonWorld);
       // update current world
       this.$store.dispatch("commitCurrentWorld", nonJsonWorld);
       // push to new world
       this.$router.push("/" + worldName);
-    }
+    },
   },
 };
 </script>

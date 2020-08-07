@@ -10,9 +10,10 @@
               <v-list-item v-for="(item, index) in this.$store.state.worldsList" :key="index" three-line>
                 <v-list-item-content>
                   <v-list-item-title>{{item.name}}</v-list-item-title>
-                  <v-list-item-subtitle>{{item.desc}}</v-list-item-subtitle>
+                  <v-list-item-subtitle v-if="item.desc.length === 0">No Description</v-list-item-subtitle>
+                  <v-list-item-subtitle v-else>{{item.desc}}</v-list-item-subtitle>
                   <v-list-item-subtitle>
-                    <v-btn :to="{name: 'WorldView', params: {world: item.name}}" @click.native="setWorld(item)">View Coords</v-btn>
+                    <v-btn :to="{name: 'WorldView', params: {world: item.name}}" @click.native="setWorld(item)"><v-icon left>mdi-book</v-icon>View Coords</v-btn>
                   </v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>

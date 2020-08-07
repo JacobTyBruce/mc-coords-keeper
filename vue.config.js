@@ -7,7 +7,14 @@ module.exports = {
       builderOptions: {
         "productName": 'Minecraft Coordinate Keeper',
         "appId": "com.jacobtbruce.mcc",
-        "publish": ['github'],
+        "publish": [
+          {
+            "provider": "github",
+            "owner": "JacobTyBruce",
+            "repo": "mc-coords-keeper",
+            "releaseType": "draft"
+          }
+      ],
         "extraResources": [
           {
             "from": "./extraResources/",
