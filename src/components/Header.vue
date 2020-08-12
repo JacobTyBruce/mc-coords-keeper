@@ -70,13 +70,14 @@ export default {
       // init vars
       let worldName = this.worldName;
       let worldDesc = this.worldDesc;
-      let worldImg = this.worldImg;
+      let worldImage = this.worldImg;
 
       // convert image to data uri
       function readFile() {
         const fr = new FileReader();
 
         return new Promise((resolve, reject) => {
+          fr.readAsDataURL(worldImage);
           fr.onerror = () => {
             fr.abort();
             reject(new DOMException("Problem parsing input file."));
@@ -85,32 +86,44 @@ export default {
           fr.onload = () => {
             resolve(fr.result);
           };
-          fr.readAsDataURL(worldImg);
-        }).then((value) => worldImg = value)
-      }
-      readFile()
+        }).then((value) => {
+          worldImage = value;
+      })}
 
-      // JSON obj
-      let jsonWorld = JSON.stringify({
-        name: worldName,
-        desc: worldDesc,
-        img: worldImg,
-        coords: [],
-      });
-      window.localStorage.setItem("World-" + worldName, jsonWorld);
-      // add to Vuex
-      // non-JSON obj
-      let nonJsonWorld = {
-        name: worldName,
-        desc: worldDesc,
-        img: worldImg,
-        coords: [],
-      };
-      this.$store.dispatch("commitNewWorld", nonJsonWorld);
-      // update current world
-      this.$store.dispatch("commitCurrentWorld", nonJsonWorld);
-      // push to new world
-      this.$router.push("/" + worldName);
+       (async () =>  {
+        console.log("Waiting for image - current state: " + worldImage + "Type: " + typeof worldImage)
+        await readFile();
+        console.log("Called for image - current state: " + worldImage + "Type: " + typeof worldImage)
+          // create JSON obj
+          let jsonWorld = JSON.stringify({
+            name: worldName,
+            desc: worldDesc,
+            img: worldImage,
+            coords: [],
+          });
+          // set to localStorage, make if/else for electron/web later on
+          window.localStorage.setItem("World-" + worldName, jsonWorld);
+
+          // add to Vuex/local file
+          // non-JSON obj
+          let nonJsonWorld = {
+            name: worldName,
+            desc: worldDesc,
+            img: worldImage,
+            coords: [],
+          };
+
+          this.$store.dispatch("commitNewWorld", nonJsonWorld);
+          
+          // update current world
+          this.$store.dispatch("commitCurrentWorld", nonJsonWorld);
+          // push to new world
+          this.$router.push("/" + worldName);
+
+      worldName = null;
+      worldDesc = null;
+      worldImage = null;
+    })()
     },
   },
 };
