@@ -24,7 +24,7 @@
 </template>
 
 <script>
-const notifier = window.require('node-notifier'); //module not working with Windows 10, need to find fix or implement specfic OS notifications
+const notifier = window.require('node-notifier');
 
 export default {
   name: "ImportWorld",

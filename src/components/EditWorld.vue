@@ -45,7 +45,7 @@
             </v-form>
           </v-col>
           <v-col>
-            <v-img :src="previewImg" alt="Preview"></v-img>
+            <v-img :src="previewImg" alt="Preview" max-height="100%" max-width="100%"></v-img>
           </v-col>
         </v-row>
       </v-container>
@@ -64,7 +64,7 @@ export default {
       newName: null,
       newDesc: null,
       newImg: null,
-      previewImg: null,
+      previewImg: this.$store.state.currentWorld.src,
     };
   },
   methods: {
@@ -86,7 +86,7 @@ export default {
           };
         }).then(value => {return value})
     },
-    setPreview: async function() {
+    async setPreview() {
       const imgSrc = await this.parseImg(this.newImg);
       this.previewImg = imgSrc
     }

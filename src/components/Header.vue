@@ -70,7 +70,17 @@ export default {
       // init vars
       let worldName = this.worldName;
       let worldDesc = this.worldDesc;
-      let worldImage = this.worldImg;
+      let worldImage;
+      
+      if (this.worldImg != null) {
+        worldImage = this.worldImg
+        console.log(worldImage)
+      } else {
+        let newCreatedImg = new Image(500, 500).src=".../public/Grass_Block.png";
+        console.log(newCreatedImg)
+        worldImage = newCreatedImg;
+        console.log(worldImage)
+      }
 
       // convert image to data uri
       function readFile() {
