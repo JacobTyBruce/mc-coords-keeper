@@ -70,23 +70,29 @@ export default {
       // init vars
       let worldName = this.worldName;
       let worldDesc = this.worldDesc;
-      let worldImage;
-      
-      if (this.worldImg != null) {
-        worldImage = this.worldImg
-        console.log(worldImage)
-      } else {
-        let newCreatedImg = new Image(500, 500).src=".../public/Grass_Block.png";
-        console.log(newCreatedImg)
-        worldImage = newCreatedImg;
-        console.log(worldImage)
-      }
-
+      let worldImage = this.worldImg;
+      console.log(worldImage)
       // convert image to data uri
       function readFile() {
+        return new Promise((resolve, reject) => {
+
+        if (worldImage === null) {
+          let canvas = document.createElement("canvas");
+          let ctx = canvas.getContext("2d");
+          let image = new Image(100, 100)
+          image.onload = () => {
+            image.src = "https://assets.codepen.io/1438993/small-axe.png";
+            ctx.drawImage(image, 0, 0);
+            worldImage = canvas.toDataURL();
+            console.log(typeof worldImage)
+            resolve()
+          };
+          image.onerror = () => {reject(new DOMException("Problem parsing default image."));}
+        } else {
+        
         const fr = new FileReader();
 
-        return new Promise((resolve, reject) => {
+        
           fr.readAsDataURL(worldImage);
           fr.onerror = () => {
             fr.abort();
@@ -94,46 +100,56 @@ export default {
           };
 
           fr.onload = () => {
-            resolve(fr.result);
+            resolve();
+            worldImage = fr.result;
           };
-        }).then((value) => {
-          worldImage = value;
-      })}
+        }})
+      }
 
-       (async () =>  {
-        console.log("Waiting for image - current state: " + worldImage + "Type: " + typeof worldImage)
+      (async () => {
+        console.log(
+          "Waiting for image - current state: " +
+            worldImage +
+            " Type: " +
+            typeof worldImage
+        );
         await readFile();
-        console.log("Called for image - current state: " + worldImage + "Type: " + typeof worldImage)
-          // create JSON obj
-          let jsonWorld = JSON.stringify({
-            name: worldName,
-            desc: worldDesc,
-            img: worldImage,
-            coords: [],
-          });
-          // set to localStorage, make if/else for electron/web later on
-          window.localStorage.setItem("World-" + worldName, jsonWorld);
+        console.log(
+          "Called for image - current state: " +
+            worldImage +
+            " Type: " +
+            typeof worldImage
+        );
+        // create JSON obj
+        let jsonWorld = JSON.stringify({
+          name: worldName,
+          desc: worldDesc,
+          img: worldImage,
+          coords: [],
+        });
+        // set to localStorage, make if/else for electron/web later on
+        window.localStorage.setItem("World-" + worldName, jsonWorld);
 
-          // add to Vuex/local file
-          // non-JSON obj
-          let nonJsonWorld = {
-            name: worldName,
-            desc: worldDesc,
-            img: worldImage,
-            coords: [],
-          };
+        // add to Vuex/local file
+        // non-JSON obj
+        let nonJsonWorld = {
+          name: worldName,
+          desc: worldDesc,
+          img: worldImage,
+          coords: [],
+        };
 
-          this.$store.dispatch("commitNewWorld", nonJsonWorld);
-          
-          // update current world
-          this.$store.dispatch("commitCurrentWorld", nonJsonWorld);
-          // push to new world
-          this.$router.push("/" + worldName);
+        this.$store.dispatch("commitNewWorld", nonJsonWorld);
 
-      worldName = null;
-      worldDesc = null;
-      worldImage = null;
-    })()
+        // update current world
+        this.$store.dispatch("commitCurrentWorld", nonJsonWorld);
+        // push to new world
+        this.$router.push("/" + worldName);
+
+        worldName = null;
+        worldDesc = null;
+        worldImage = null;
+      })();
     },
   },
 };
