@@ -24,7 +24,7 @@
 </template>
 
 <script>
-const notifier = window.require('node-notifier');
+//const notifier = window.require('node-notifier'); not building -- fix if possible
 
 export default {
   name: "ImportWorld",
@@ -56,11 +56,13 @@ export default {
                   errorCount += 1;
               }
               if (errorCount === 0) {
-                  notifier.notify({appName: "com.jacobtbruce.mcc", title: 'Success!', message: 'All World(s) Added Successfully!'})
-                  //const successNotification = new Notification('Success!', {body: 'All World(s) Added Successfully!'})
+                  //notifier.notify({appName: "com.jacobtbruce.mcc", title: 'Success!', message: 'All World(s) Added Successfully!'})
+                  const successNotification = new Notification('Success!', {body: 'All World(s) Added Successfully!'})
+                  successNotification
               } else {
-                  notifier.notify({appName: "com.jacobtbruce.mcc", title: 'Uh Oh!', message: successCount + " world(s) imported correctly, and " + errorCount + " world(s) failed to upload!",})
-                  //const errorNotification = new Notification('Uh Oh!', {body: successCount + " world(s) imported correctly, but " + errorCount + " world(s) failed to upload!"})
+                  //notifier.notify({appName: "com.jacobtbruce.mcc", title: 'Uh Oh!', message: successCount + " world(s) imported correctly, and " + errorCount + " world(s) failed to upload!",})
+                  const errorNotification = new Notification('Uh Oh!', {body: successCount + " world(s) imported correctly, but " + errorCount + " world(s) failed to upload!"})
+                  errorNotification
               }
           })
           this.upload = null

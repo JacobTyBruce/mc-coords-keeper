@@ -49,6 +49,7 @@ export default {
         this.$store.dispatch("commitNewWorld", value);
       });
     }
+
   },
   // not working?
   computed: mapState(["isDark"]),

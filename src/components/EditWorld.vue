@@ -2,7 +2,7 @@
   <v-dialog v-model="dialog" persistent max-width="45%" transition="dialog-transition">
     <template v-slot:activator="{ on }">
       <v-btn color="orange" depressed v-on="on" medium>
-        <v-icon medium left>mdi-pencil-outline</v-icon>Edit World
+        <v-icon medium left>mdi-pencil-outline</v-icon>Edit World -- BROKEN
       </v-btn>
     </template>
     <v-card>
