@@ -17,6 +17,7 @@
   "main": "background.js",
   "dependencies": {
     "core-js": "^3.6.5",
+    "electron": "^11.0.3",
     "electron-store": "^6.0.0",
     "electron-updater": "^4.3.4",
     "file-saver": "^2.0.2",
@@ -27,8 +28,7 @@
     "vue-cli": "^2.9.6",
     "vue-router": "^3.2.0",
     "vuetify": "^2.3.3",
-    "vuex": "^3.5.1",
-    "electron": "^9.2.0"
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",
@@ -37,7 +37,7 @@
     "@vue/cli-plugin-vuex": "~4.4.0",
     "@vue/cli-service": "~4.4.0",
     "babel-eslint": "^10.1.0",
-    "electron": "9.3.1",
+    "electron": "^11.0.3",
     "electron-devtools-installer": "^3.1.0",
     "electron-icon-builder": "^1.0.2",
     "eslint": "^6.7.2",
