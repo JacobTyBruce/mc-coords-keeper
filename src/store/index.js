@@ -45,8 +45,6 @@ export default new Vuex.Store({
     addWorld: (state, world) => {
       state.worldsList.push(world);
       worldStorage.set(world.name, world)
-      console.log(state.isElectron)
-      console.log(!state.isElectron)
       if (!state.isElectron) {
         window.localStorage.setItem('World-'+world.name, JSON.stringify(world))
       }
