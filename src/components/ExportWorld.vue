@@ -33,7 +33,14 @@ export default {
               [this.$store.state.currentWorld.name]: this.$store.state.currentWorld
           }
           var blob = new Blob([JSON.stringify(data)], {type: 'application/json'})
-          FileSaver.saveAs(blob, "world-download.json")
+          try {
+            FileSaver.saveAs(blob, "world-download.json")
+          } catch (error) {
+            const errorNotification = new Notification('Error Exporting!', {body: "Error Exporting World! Try restarting the app and trying later! Additionally, check the console if you know what you're doing."})
+            console.log(error)
+            errorNotification
+          }
+          
       }
   }
 };

@@ -11,6 +11,7 @@
       <v-card>
           <v-card-title>Delete Location</v-card-title>
           <v-card-subtitle>{{this.location.name}}</v-card-subtitle>
+          <v-card-text>X: {{this.location.x}}<br/>Y: {{this.location.y}}<br/>Z: {{this.location.z}}</v-card-text>
           <v-card-actions>
              <v-btn color='success' @click="dialog = false">Close</v-btn> <v-spacer></v-spacer><v-btn color='error' @click='deleteLocation(location); dialog = false'>Delete</v-btn>
           </v-card-actions>

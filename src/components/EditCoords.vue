@@ -10,9 +10,9 @@
         <v-container>
           <v-row>
             <v-col justify-space-around>
-              <v-text-field type="number" single-line label="New X" v-model="newX" ></v-text-field>
-              <v-text-field type="number" single-line label="New Y" v-model="newY" ></v-text-field>
-              <v-text-field type="number" single-line label="New Z" v-model="newZ" ></v-text-field>
+              <v-text-field type="number" single-line label="New X" v-model="newX" :rules="coordRules"></v-text-field>
+              <v-text-field type="number" single-line label="New Y" v-model="newY" :rules="yCoordRules"></v-text-field>
+              <v-text-field type="number" single-line label="New Z" v-model="newZ" :rules="coordRules"></v-text-field>
             </v-col>
           </v-row>
         </v-container>
@@ -31,8 +31,6 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-
 export default {
   name: "EditCoords",
   props: ["location"],
@@ -42,15 +40,23 @@ export default {
       newX: null,
       newY: null,
       newZ: null,
+      nameRules: [
+        val => !!val || 'Please enter a name!'
+      ],
+      yCoordRules: [
+        val => !!val || 'Please enter a value!',
+        val => val <= 256 || 'Max height is 256!'
+      ],
+      coordRules: [
+        val => !!val || 'Please enter a value!',
+        val => val <= 29999984 || 'Outside world border!'
+      ]
     };
   },
   methods: {
-    ...mapActions({
-      editLocation: "commitEditLocation",
-    }),
     newLocationObj(newX, newY, newZ) {
         let newLocation = {name: this.location.name, x: newX, y: newY, z: newZ}
-        this.editLocation(newLocation)
+        this.$store.dispatch("commitEditLocation", newLocation)
     },
   },
 };

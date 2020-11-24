@@ -2,7 +2,7 @@
   <v-dialog v-model="dialog" persistent max-width="45%" transition="dialog-transition">
     <template v-slot:activator="{ on }">
       <v-btn color="orange" depressed v-on="on" medium>
-        <v-icon medium left>mdi-pencil-outline</v-icon>Edit World -- BROKEN
+        <v-icon medium left>mdi-pencil-outline</v-icon>Edit World
       </v-btn>
     </template>
     <v-card>
@@ -12,12 +12,12 @@
         </v-row>
         <v-row>
           <v-col>
-            <v-img :src="currentWorld.img"></v-img>
+            <v-img :src="this.currentWorld.img"></v-img>
           </v-col>
           <v-col>
-            <v-card-subtitle>{{currentWorld.name}}</v-card-subtitle>
-            <v-card-subtitle v-if="currentWorld.desc === 0">No Description</v-card-subtitle>
-            <v-card-subtitle>{{currentWorld.desc}}</v-card-subtitle>
+            <v-card-subtitle>{{this.currentWorld.name}}</v-card-subtitle>
+            <v-card-subtitle v-if="this.$store.state.currentWorld.desc.length === 0">No Description</v-card-subtitle>
+            <v-card-subtitle>{{this.currentWorld.desc}}</v-card-subtitle>
           </v-col>
         </v-row>
         <v-divider></v-divider>
@@ -39,7 +39,7 @@
                 <v-btn
                   color="green darken-1"
                   text
-                  @click="dialog = false; newLocationObj(newX, newY, newZ)"
+                  @click="dialog = false; saveWorld()"
                 >Edit</v-btn>
               </v-card-actions>
             </v-form>
@@ -61,10 +61,10 @@ export default {
   data: function () {
     return {
       dialog: false,
-      newName: null,
-      newDesc: null,
-      newImg: null,
-      previewImg: this.$store.state.currentWorld.src,
+      newName: this.$store.state.currentWorld.name,
+      newDesc: this.$store.state.currentWorld.desc,
+      newImg: this.$store.state.currentWorld.img,
+      previewImg: this.$store.state.currentWorld.img,
     };
   },
   methods: {
@@ -73,7 +73,6 @@ export default {
     }),
     parseImg(img) {
         const fr = new FileReader();
-
         return new Promise((resolve, reject) => {
           fr.readAsDataURL(img);
           fr.onerror = () => {
@@ -89,10 +88,20 @@ export default {
     async setPreview() {
       const imgSrc = await this.parseImg(this.newImg);
       this.previewImg = imgSrc
+      this.newImg = imgSrc
+    },
+    saveWorld() {
+      let world = {
+        name: this.newName,
+        desc: this.newDesc, 
+        img: this.newImg,
+        coords: this.$store.state.currentWorld.coords
+      }
+      this.$store.dispatch('commitEditWorld', world)
     }
   },
-  computed: {
-    ...mapState(["currentWorld"]),
-  },
+  computed: mapState([
+    'currentWorld'
+  ])
 };
 </script>

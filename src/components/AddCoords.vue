@@ -10,10 +10,10 @@
           <v-container>
             <v-row>
               <v-col justify-space-around>
-                <v-text-field label="Location Name" v-model="locationName" :rules="['Required']"></v-text-field>
-                <v-text-field type="number" single-line label="X" v-model="x" :rules="['Required']"></v-text-field>
-                <v-text-field type="number" single-line label="Y" v-model="y" :rules="['Required']"></v-text-field>
-                <v-text-field type="number" single-line label="Z" v-model="z" :rules="['Required']"></v-text-field>
+                <v-text-field label="Location Name" v-model="locationName" :rules="nameRules"></v-text-field>
+                <v-text-field type="number" single-line label="X" v-model="x" :rules="coordRules"></v-text-field>
+                <v-text-field type="number" single-line label="Y" v-model="y" :rules="yCoordRules"></v-text-field>
+                <v-text-field type="number" single-line label="Z" v-model="z" :rules="coordRules"></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -43,6 +43,17 @@ export default {
       x: "",
       y: "",
       z: "",
+      nameRules: [
+        val => !!val || 'Please enter a name!'
+      ],
+      yCoordRules: [
+        val => !!val || 'Please enter a value!',
+        val => val <= 256 || 'Max height is 256!'
+      ],
+      coordRules: [
+        val => !!val || 'Please enter a value!',
+        val => val <= 29999984 || 'Outside world border!'
+      ]
     };
   },
   methods: {

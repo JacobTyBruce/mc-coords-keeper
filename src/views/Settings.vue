@@ -21,7 +21,7 @@
                    <v-card>
                        <v-card-title>Theme Settings</v-card-title>
                        <v-divider></v-divider>
-                       <v-switch v-model="darkMode" :label="`Dark Mode`" @change="changeDark()"></v-switch>
+                       <v-switch v-model="darkMode" label="Dark Mode" @change="changeDark()"></v-switch>
                        <v-card-subtitle> <b> More Coming Soon (Custom Themes!) </b> </v-card-subtitle>
                    </v-card>
                 </v-col>

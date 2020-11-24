@@ -20,6 +20,7 @@
       </template>
       <v-card>
         <v-card-title class="headline">Add World</v-card-title>
+        <v-card-text> NOTE: Adding a world with the same name as an existing world will cause it to override the existing one </v-card-text>
         <v-form max-width="80%">
           <v-container>
             <v-row>
@@ -66,72 +67,54 @@ export default {
     };
   },
   methods: {
-    addWorld: function () {
+    async addWorld() {
       // init vars
       let worldName = this.worldName;
       let worldDesc = this.worldDesc;
       let worldImage = this.worldImg;
-      console.log(worldImage)
-      // convert image to data uri
-      function readFile() {
-        return new Promise((resolve, reject) => {
-
-        if (worldImage === null) {
-          let canvas = document.createElement("canvas");
-          let ctx = canvas.getContext("2d");
-          let image = new Image(100, 100)
-          image.onload = () => {
-            image.src = "https://assets.codepen.io/1438993/small-axe.png";
-            ctx.drawImage(image, 0, 0);
-            worldImage = canvas.toDataURL();
-            console.log(typeof worldImage)
-            resolve()
-          };
-          image.onerror = () => {reject(new DOMException("Problem parsing default image."));}
+      // convert function
+      function convertToDataUrl(image) {
+        if (image != null) {
+          return new Promise((resolve, reject) => {
+            const fr = new FileReader();
+            fr.onerror = error => reject(error);
+            fr.onload = res => resolve(res.target.result)
+            fr.readAsDataURL(image)
+          }) 
         } else {
-        
-        const fr = new FileReader();
-
-        
-          fr.readAsDataURL(worldImage);
-          fr.onerror = () => {
-            fr.abort();
-            reject(new DOMException("Problem parsing input file."));
-          };
-
-          fr.onload = () => {
-            resolve();
-            worldImage = fr.result;
-          };
-        }})
+          let image = new Image();
+          image.src = "https://assets.codepen.io/1438993/small-axe.png";
+          image.setAttribute("crossorigin", "anonymous")
+          console.log(image.width)
+          image.onload = async () => {
+            let canvas = document.createElement("canvas")
+            canvas.width = '100px'
+            canvas.height = '100px'
+            let context = canvas.getContext("2d")
+            context.drawImage(image, 0, 0)
+            worldImage = canvas.toDataURL()
+            console.log(worldImage)
+          }
+        }
       }
-
-      (async () => {
-        console.log(
-          "Waiting for image - current state: " +
-            worldImage +
-            " Type: " +
-            typeof worldImage
-        );
-        await readFile();
-        console.log(
-          "Called for image - current state: " +
-            worldImage +
-            " Type: " +
-            typeof worldImage
-        );
-        // create JSON obj
-        let jsonWorld = JSON.stringify({
-          name: worldName,
-          desc: worldDesc,
-          img: worldImage,
-          coords: [],
-        });
-        // set to localStorage, make if/else for electron/web later on
-        window.localStorage.setItem("World-" + worldName, jsonWorld);
-
-        // add to Vuex/local file
-        // non-JSON obj
+      // convert image to data uri
+      if (worldImage === null || worldImage === undefined) {
+        var blobReq = await fetch("https://assets.codepen.io/1438993/small-axe.png")
+        console.log(blobReq)
+        let blob = await blobReq.blob()
+        console.log(blob)
+        worldImage = await convertToDataUrl(blob)
+        //worldImage = await convertToDataUrl(null)
+        console.log(worldImage)
+        console.log('Done processing default image')
+      } else {
+        console.log('Image provided')
+        console.log(worldImage)
+        worldImage = await convertToDataUrl(worldImage);
+        console.log('Done proccessing provided image')
+      }
+        console.log('Done with images')
+        // non-JSON world
         let nonJsonWorld = {
           name: worldName,
           desc: worldDesc,
@@ -146,10 +129,9 @@ export default {
         // push to new world
         this.$router.push("/" + worldName);
 
-        worldName = null;
-        worldDesc = null;
-        worldImage = null;
-      })();
+        this.worldName = "";
+        this.worldDesc = "";
+        this.worldImg = null;
     },
   },
 };

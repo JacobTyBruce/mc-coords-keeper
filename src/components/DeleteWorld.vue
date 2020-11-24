@@ -16,8 +16,8 @@
                       <v-col>
                           <v-list>
                               <v-list-item>{{currentWorld.name}}</v-list-item>
-                              <v-list-item v-if="currentWorld.desc.length > 0" text-subtitle>{{currentWorld.desc}}</v-list-item>
-                              <v-list-item v-if="currentWorld.desc.length == 0">No Description</v-list-item>
+                              <v-list-item v-if="currentWorld.desc.length == 0 || currentWorld.desc == null">No Description</v-list-item>
+                              <v-list-item v-else text-subtitle>{{currentWorld.desc}}</v-list-item>
                               <v-list-item>Locations - {{currentWorld.coords.length}}</v-list-item>
                           </v-list>
                       </v-col>
