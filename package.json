@@ -24,7 +24,7 @@
     "file-saver": "^2.0.5",
     "fs": "0.0.1-security",
     "jquery": "^3.5.1",
-    "node-notifier": "^7.0.2",
+    "node-notifier": "^8.0.1",
     "vue": "^2.6.11",
     "vue-cli": "^2.9.6",
     "vue-router": "^3.2.0",
