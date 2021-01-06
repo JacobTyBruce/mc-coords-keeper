@@ -7,14 +7,9 @@
       <v-row>
         <v-col>
           <v-avatar color="white" size="100" tile>
-            <img
-              :src='this.$store.state.defaultImg'
-              alt="alt"
-              v-if="this.$store.state.currentWorld.img == null"
-              />
-            <img
+            <v-img
               :src='this.$store.state.currentWorld.img'
-              alt="alt"
+              alt="World Image"
             />
           </v-avatar>
         </v-col>
@@ -80,6 +75,7 @@ import EditCoords from "../components/EditCoords.vue"
 import DeleteCoords from "../components/DeleteCoords.vue"
 import ExportWorld from "../components/ExportWorld.vue"
 import EditWorld from "../components/EditWorld.vue"
+import store from "../store"
 
 export default {
   name: "WorldView",
@@ -95,6 +91,31 @@ export default {
       this.$router.push('/')
     } else {
       return
+    }
+  },
+  beforeRouteEnter: (to, from, next) => {
+    console.log('In Component')
+    console.log(store)
+    console.log(to)
+      if (!(Object.prototype.hasOwnProperty.call(store.state.currentWorld, 'name'))) {
+      console.log('State Empty')
+      var world = to.params.world // world name
+      console.log(world)
+      var match = null
+      // try to match in worldsList
+      // need to find way to wait for state to be populated
+      // move to incomponent so state loads first
+      store.state.worldsList.forEach((stateWorld) => {
+        console.log('New World: '+stateWorld.name)
+        if (stateWorld.name == world) { match = stateWorld }
+      })
+      console.log('Ended')
+      if (match != null) {store.dispatch('commitCurrentWorld', match)}
+      else {next({path: '/'})}
+      next()
+    } else {
+      console.log('State populated')
+      next()
     }
   }
 };

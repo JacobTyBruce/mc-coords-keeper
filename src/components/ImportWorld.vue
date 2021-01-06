@@ -52,8 +52,10 @@ export default {
           // because multi-world JSON file would not have top-level name prop as worlds are stored with their
           // being top-level prop
           console.log(worldFile)
+          // checks if top-level has name prop, thus declaring a single-world file
           if (Object.prototype.hasOwnProperty.call(worldFile, 'name')) {
             try {
+              worldFile.name = this.$checkname(worldFile.name)
               this.$store.dispatch('commitNewWorld', worldFile)
               const successNotification = new Notification('Success!', {body: 'World Added Successfully!'})
               successNotification
@@ -73,6 +75,7 @@ export default {
           worldFileArray.forEach(world => {
             console.log(world)
               if (Object.prototype.hasOwnProperty.call(world, 'name') && Object.prototype.hasOwnProperty.call(world, 'desc') && Object.prototype.hasOwnProperty.call(world, 'coords')) {
+                  world.name = this.$checkname(world.name)
                   this.$store.dispatch('commitNewWorld', world)
                   successCount += 1;
               }

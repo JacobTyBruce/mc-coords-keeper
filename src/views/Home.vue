@@ -29,7 +29,7 @@ export default {
   name: 'Home',
   data: function () {
     return {
-      reloadKey: 0
+      reloadKey: 0, 
     }
   },
   methods: {

@@ -30,12 +30,12 @@ export {worldStorage, userSettings}
 // data gets set different from eahc other in case of error or faulty programming in future
 // as seen with dark mode bug in previous version
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
     worldsList: [],
     currentWorld: {},
     isDark: false,
-    defaultImg: 'https://vignette.wikia.nocookie.net/minecraft/images/f/fe/GrassNew.png/revision/latest?cb=20190903234415',
+    defaultImg: 'grass.png',
     isElectron: process.env.IS_ELECTRON,
   },
   mutations: {
@@ -169,6 +169,10 @@ export default new Vuex.Store({
       state.isDark = darkSetting;
       userSettings.set('darkMode', state.isDark)
       if (!state.isElectron) {window.localStorage.setItem('darkApp', state.isDark)}
+    },
+    setDefaultImg: (state, image) => {
+      // enable later -- figure out way to enable relative name path with static variable
+      state;image;
     }
   },
   actions: {
@@ -198,8 +202,48 @@ export default new Vuex.Store({
     },
     commitSetDarkMode: (context, darkSetting) => {
       context.commit("setDarkMode", darkSetting);
+    },
+    commitSetDefaultImg: (context, image) => {
+      context.commit("setDefaultImg", image)
     }
   },
   modules: {
   }
 })
+
+// state is init'ed here because it fires before app.vue lifecycle, so worldView bug is prevented
+
+// set dark mode
+if (!process.env.IS_ELECTRON) { // if not electron
+  if (window.localStorage.getItem("darkApp")) { // if darkApp exists in LS, commit
+    let convertedVal = JSON.parse(window.localStorage.getItem("darkApp"));
+    store.dispatch("commitSetDarkMode", convertedVal);
+  } else { // if not, set to false by default
+    window.localStorage.setItem("darkApp", "false");
+  }
+} else { // for electron app
+  if (userSettings.has("darkMode")) {
+    store.dispatch("commitSetDarkMode", userSettings.get("darkMode"));
+  } else {
+    store.dispatch("commitSetDarkMode", false);
+    userSettings.set("darkMode", false)
+  }
+}
+
+// worlds init
+if (!process.env.IS_ELECTRON) {
+  for (let i = 0; i < localStorage.length; i++) { // loop over LS object
+    let currentKey = localStorage.key(i); // current key for Ls item
+    let currentValue = localStorage.getItem(currentKey); // current item in LS based on key
+    if (currentKey.includes("World-")) { // checks if world
+      store.dispatch("commitNewWorld", JSON.parse(currentValue));
+    }
+  }
+} else {
+  // get storage values to put into state -- for desktop
+  Object.values(worldStorage.store).forEach((value) => {
+    store.dispatch("commitNewWorld", value);
+  });
+}
+
+export default store;

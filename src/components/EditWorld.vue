@@ -29,7 +29,7 @@
                   <v-col justify-space-around>
                     <v-text-field type="text" single-line label="New Name" v-model="newName"></v-text-field>
                     <v-text-field type="text" single-line label="New Description" v-model="newDesc"></v-text-field>
-                    <v-file-input label="New Image" v-model="newImg" @change="setPreview()"></v-file-input>
+                    <v-file-input label="New Image" v-model="newImg" @change="setPreview()">{{this.newImg.name}}</v-file-input>
                   </v-col>
                 </v-row>
               </v-container>
@@ -86,6 +86,7 @@ export default {
         }).then(value => {return value})
     },
     async setPreview() {
+      console.log(this.newImg instanceof Blob)
       const imgSrc = await this.parseImg(this.newImg);
       this.previewImg = imgSrc
       this.newImg = imgSrc

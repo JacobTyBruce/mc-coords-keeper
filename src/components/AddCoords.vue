@@ -48,11 +48,13 @@ export default {
       ],
       yCoordRules: [
         val => !!val || 'Please enter a value!',
-        val => val <= 256 || 'Max height is 256!'
+        val => val <= 256 || 'Max height is 256!',
+        val => val >= 0 || 'Below the world!'
       ],
       coordRules: [
         val => !!val || 'Please enter a value!',
-        val => val <= 29999984 || 'Outside world border!'
+        val => val <= 29999984 || 'Outside world border!',
+        val => val >= -29999984 || 'Outside world border!'
       ]
     };
   },

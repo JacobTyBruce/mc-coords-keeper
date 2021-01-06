@@ -18,7 +18,7 @@
 </template>
 
 <script>
-var FileSaver = window.require('file-saver');
+var FileSaver = require('file-saver');
 
 export default {
   name: "ExportWorld",

@@ -4,6 +4,7 @@ module.exports = {
   ],
   pluginOptions: {
     electronBuilder: {
+      nodeIntegration: true,
       builderOptions: {
         "productName": 'Minecraft Coordinate Keeper',
         "appId": "com.jacobtbruce.mcc",
@@ -17,8 +18,8 @@ module.exports = {
       ],
         "extraResources": [
           {
-            "from": "./extraResources/",
-            "to": "extraResources",
+            "from": "./src/assets/bundle-images",
+            "to": "/superlongreallyclearname",
             "filter": [
               "**/*"
             ]

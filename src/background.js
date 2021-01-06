@@ -32,12 +32,23 @@ function createWindow() {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: true,
+      nodeIntegrationInWorker: true,
       enableRemoteModule: true,
-      devTools: true
+      devTools: true,
+      webSecurity: process.env.NODE_ENV !== 'development' 
     }
   })
-  //win.setMenuBarVisibility(false)
+  //win.setMenuBarVisibility(process.env.NODE_ENV == 'development' )
+  win.setMenuBarVisibility(true)
 
+  // change stupid file shceme
+  app.whenReady().then(() => {
+    protocol.registerFileProtocol('file', (request, callback) => {
+      const pathname = request.url.replace('file:///', '');
+      callback(pathname);
+    });
+  });
+  
   win.on('page-title-updated', (evt) => {
     evt.preventDefault();
   });
@@ -75,6 +86,8 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
