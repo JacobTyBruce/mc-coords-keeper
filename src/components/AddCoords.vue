@@ -6,7 +6,7 @@
       </template>
       <v-card>
         <v-card-title class="headline">Add Location</v-card-title>
-        <v-form max-width="80%">
+        <v-form max-width="80%" ref="form">
           <v-container>
             <v-row>
               <v-col justify-space-around>
@@ -23,7 +23,7 @@
           <v-btn
             color="green darken-1"
             text
-            @click="dialog = false; addLocation(locationName, x, y, z)"
+            @click="validate()"
           >Add</v-btn>
         </v-card-actions>
         </v-form>
@@ -58,32 +58,45 @@ export default {
       ]
     };
   },
+  watch: {
+    dialog(newVal) {
+      if (newVal == false) { this.$refs.form.reset() }
+      else {this.x,this.y,this.z == ""}
+    }
+  },
   methods: {
-      addLocation: function(name, x, y, z) {
-        // add location to array
-        let newLocation = {name: name, x: parseInt(x),y: parseInt(y), z: parseInt(z)};
-        // clear data
-        this.locationName = "";
-        this.x = null;
-        this.y = null;
-        this.z = null;
-        
-        // append location to world object -- dispatch action
-        this.$store.dispatch("commitNewLocation", newLocation);
+    validate() {
+      const valid = this.$refs.form.validate();
+      if (valid == true) {
+        this.addLocation(this.locationName, this.x, this.y, this.z);
+        this.dialog = false;
+      }
+    },
+    addLocation: function(name, x, y, z) {
+      // add location to array
+      let newLocation = {name: name, x: parseInt(x),y: parseInt(y), z: parseInt(z)};
+      // clear data
+      this.locationName = "";
+      this.x = null;
+      this.y = null;
+      this.z = null;
+      
+      // append location to world object -- dispatch action
+      this.$store.dispatch("commitNewLocation", newLocation);
 
-        // commit to localStorage - match key in local sotrage with currentWorld name -- grab object in currentWorld and override value in lS?
-        let currentWorldName = this.$store.state.currentWorld.name;
-        for (let i = 0; i < localStorage.length; i++) {
-            let currentKey = localStorage.key(i);
-            let currentValue = localStorage.getItem(currentKey);
-            if (currentKey.includes(currentWorldName)) {
-                let newValue = JSON.parse(currentValue);
-                newValue.coords.push(newLocation);
-                window.localStorage.setItem(currentKey, JSON.stringify(newValue));
-            }
-        }
-        // refresh
-        this.$emit("update-reload")
+      // commit to localStorage - match key in local sotrage with currentWorld name -- grab object in currentWorld and override value in lS?
+      let currentWorldName = this.$store.state.currentWorld.name;
+      for (let i = 0; i < localStorage.length; i++) {
+          let currentKey = localStorage.key(i);
+          let currentValue = localStorage.getItem(currentKey);
+          if (currentKey.includes(currentWorldName)) {
+              let newValue = JSON.parse(currentValue);
+              newValue.coords.push(newLocation);
+              window.localStorage.setItem(currentKey, JSON.stringify(newValue));
+          }
+      }
+      // refresh
+      this.$emit("update-reload")
     }   
   }
 };

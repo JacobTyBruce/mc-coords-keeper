@@ -35,7 +35,7 @@
         <v-card-actions>
           <v-btn color="red darken-1" text @click="dialog = false" left>Close</v-btn>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="dialog = false; addWorld()">Add</v-btn>
+          <v-btn color="green darken-1" text @click="validate()">Add</v-btn>
         </v-card-actions>
       </v-card>
     </v-menu>
@@ -61,13 +61,13 @@ export default {
     return {
       dialog: false,
       imageSrc: 'data:image/png;base64,' + this.$fs.readFileSync(this.$static + '/icon.png', {encoding: 'base64'}),
-      worldName: "",
+      worldName: null,
       worldDesc: "",
       worldImg: null,
       appName: "MC Coordinate Keeper",
       nameRules: [
-        v => !!v || 'Please Enter A Name',
-       v => (v && v.length <= 50) || 'Name must be 50 or less characters!'
+        v => !!v || 'You must enter a world name!',
+        v => (v && v.length <= 50) || 'Name must be 50 or less characters!',
       ]
     };
   },
@@ -77,6 +77,13 @@ export default {
     }
   },
   methods: {
+    async validate() {
+      console.log('About to validate')
+      const valid = await this.$refs.form.validate()
+      console.log(valid)
+      console.log('Done validating')
+      if (valid == true) { this.dialog = false; this.addWorld() }
+    },
     async addWorld() {
       // init arr of values
       // convert undefined values to empty string

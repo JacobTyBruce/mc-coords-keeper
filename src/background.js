@@ -19,12 +19,14 @@ protocol.registerSchemesAsPrivileged([
 
 app.setAppUserModelId("mcc-keeper");
 
+const APP_NAME = (process.env.NODE_ENV == 'development') ? 'MCC Development' : "Minecraft Coordinate Keeper";
+
 function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
     width: 1200,
     height: 800,
-    title: "Minecraft Coordinate Keeper",
+    title: APP_NAME,
     center: true,
     icon: path.join(__static, 'icon.png'),
     titleBarStyle: 'hidden',
@@ -38,6 +40,7 @@ function createWindow() {
       webSecurity: process.env.NODE_ENV !== 'development' 
     }
   })
+  
   //win.setMenuBarVisibility(process.env.NODE_ENV == 'development' )
   win.setMenuBarVisibility(true)
 
@@ -48,7 +51,7 @@ function createWindow() {
       callback(pathname);
     });
   });
-  
+
   win.on('page-title-updated', (evt) => {
     evt.preventDefault();
   });

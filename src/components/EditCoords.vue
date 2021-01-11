@@ -6,7 +6,7 @@
     <v-card>
       <v-card-title>Edit Location</v-card-title>
       <v-card-subtitle>{{this.location.name}}</v-card-subtitle>
-      <v-form max-width="80%">
+      <v-form max-width="80%" ref="form">
         <v-container>
           <v-row>
             <v-col justify-space-around>
@@ -22,7 +22,7 @@
           <v-btn
             color="green darken-1"
             text
-            @click="dialog = false; newLocationObj(newX, newY, newZ)"
+            @click="newLocationObj(newX, newY, newZ)"
           >Edit</v-btn>
         </v-card-actions>
       </v-form>
@@ -53,10 +53,20 @@ export default {
       ]
     };
   },
+  watch: {
+    dialog(newVal) {
+      if (newVal == false) { this.$refs.form.reset() }
+      else {this.newX,this.newY,this.newZ == null}
+    }
+  },
   methods: {
     newLocationObj(newX, newY, newZ) {
-        let newLocation = {name: this.location.name, x: newX, y: newY, z: newZ}
-        this.$store.dispatch("commitEditLocation", newLocation)
+        if (this.$refs.form.validate() == true) {
+          let newLocation = {name: this.location.name, x: newX, y: newY, z: newZ}
+          this.$store.dispatch("commitEditLocation", newLocation)
+          this.dialog = false
+        }
+        
     },
   },
 };

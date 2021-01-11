@@ -21,12 +21,14 @@
                    <v-card>
                        <v-card-title>Theme Settings</v-card-title>
                        <v-divider></v-divider>
-                       <v-switch v-model="darkMode" label="Dark Mode" @change="changeDark()"></v-switch>
+                       <v-switch v-model="darkMode" label="Dark Mode" @change="changeDark(); flipDark()"></v-switch>
                        <v-card-subtitle> <b> More Coming Soon (Custom Themes!) </b> </v-card-subtitle>
                    </v-card>
                 </v-col>
                 <v-col cols="2">
                     <v-btn color="error" outlined href="https://github.com/JacobTyBruce/mc-coords-keeper/issues/new" target="_blank"> Report A Problem</v-btn>
+                    <h5>Build Version {{this.$remote.app.getVersion()}}</h5>
+                    <h6>Electron Version {{this.$remote.process.versions.electron}}</h6>
                 </v-col>
             </v-row>
             <v-row></v-row>
@@ -47,7 +49,10 @@ export default {
     methods: {
         ...mapActions({
             changeDark: 'commitOppDarkMode'
-        })
+        }),
+        flipDark() {
+            this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+        }
     }
 
 }

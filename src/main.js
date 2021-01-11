@@ -4,6 +4,9 @@ import router from './router'
 import vuetify from './plugins/vuetify';
 import store from './store'
 const fs = window.require('fs')
+const remote = require('electron').remote
+
+console.log(remote.process)
 
 Vue.config.productionTip = false
 Vue.config.devtools = process.env.NODE_ENV === 'development';
@@ -13,6 +16,9 @@ Vue.prototype.$static = __static
 
 // global fs
 Vue.prototype.$fs = fs
+
+// global remote module
+Vue.prototype.$remote = remote
 
 Vue.prototype.$convertToDataUrl = function(image) {
   console.log('Image: ' + image)

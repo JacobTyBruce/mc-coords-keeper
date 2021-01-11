@@ -15,21 +15,21 @@
             <v-img :src="this.currentWorld.img"></v-img>
           </v-col>
           <v-col>
-            <v-card-subtitle>{{this.currentWorld.name}}</v-card-subtitle>
-            <v-card-subtitle v-if="this.$store.state.currentWorld.desc.length === 0">No Description</v-card-subtitle>
-            <v-card-subtitle>{{this.currentWorld.desc}}</v-card-subtitle>
+            <v-card-subtitle>Current Title: {{this.currentWorld.name}}</v-card-subtitle>
+            <v-card-subtitle v-if="this.$store.state.currentWorld.desc.length === 0">No Current Description</v-card-subtitle>
+            <v-card-subtitle v-else>Current Description: {{this.currentWorld.desc}}</v-card-subtitle>
           </v-col>
         </v-row>
         <v-divider></v-divider>
         <v-row>
           <v-col>
-            <v-form max-width="80%">
+            <v-form max-width="80%" ref="form">
               <v-container>
                 <v-row>
                   <v-col justify-space-around>
                     <v-text-field type="text" single-line label="New Name" v-model="newName"></v-text-field>
                     <v-text-field type="text" single-line label="New Description" v-model="newDesc"></v-text-field>
-                    <v-file-input label="New Image" v-model="newImg" @change="setPreview()">{{this.newImg.name}}</v-file-input>
+                    <v-file-input label="New Image" v-model="newImg" :value="this.previewImgTitle" @change="setPreview()">{{this.newImg.name}}</v-file-input>
                   </v-col>
                 </v-row>
               </v-container>
@@ -40,7 +40,7 @@
                   color="green darken-1"
                   text
                   @click="dialog = false; saveWorld()"
-                >Edit</v-btn>
+                >Edit</v-btn> 
               </v-card-actions>
             </v-form>
           </v-col>
@@ -65,7 +65,15 @@ export default {
       newDesc: this.$store.state.currentWorld.desc,
       newImg: this.$store.state.currentWorld.img,
       previewImg: this.$store.state.currentWorld.img,
+      previewImgTitle: ""
     };
+  },
+  watch: {
+    dialog(newVal) {
+      console.log(this.currentWorld)
+      if (newVal == false) { this.$refs.form.resetValidation(); this.newName = this.currentWorld.name; this.newDesc = this.currentWorld.desc; this.newImg = this.currentWorld.img; this.previewImgTitle = ""}
+      
+    }
   },
   methods: {
     ...mapActions({
@@ -87,6 +95,9 @@ export default {
     },
     async setPreview() {
       console.log(this.newImg instanceof Blob)
+      console.log(this.newImg)
+      console.log(this.newImg.name)
+      this.previewImgTitle = this.newImg.name
       const imgSrc = await this.parseImg(this.newImg);
       this.previewImg = imgSrc
       this.newImg = imgSrc

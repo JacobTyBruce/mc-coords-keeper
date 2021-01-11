@@ -4,7 +4,7 @@
       <v-icon mr-2>mdi-arrow-left-bold-outline</v-icon>Back
     </v-btn>
     <v-container>
-      <v-row>
+      <v-row justify="space-around">
         <v-col>
           <v-avatar color="white" size="100" tile>
             <v-img
@@ -18,14 +18,17 @@
           <p>{{this.$store.state.currentWorld.desc}}</p>
         </v-col>
         <v-col class='text-center'>
-          <EditWorld />
-          <AddCoords />
+          <v-row  height="100%" justify="space-around" style="height: 100%">
+            <v-col><EditWorld /></v-col>
+            <v-col><AddCoords /></v-col>
+          </v-row>
         </v-col>
       </v-row>
       <v-row>
         <v-col cols="12">
           <v-list text-center>
-            <v-list-item
+            <v-list-item v-if="this.$store.state.currentWorld.coords.length == 0">No Locations Yet!</v-list-item>
+            <v-list-item v-else
               v-for="(item, index) in this.$store.state.currentWorld.coords"
               :key="'coord' + index"
             >
