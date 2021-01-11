@@ -41,8 +41,7 @@ function createWindow() {
     }
   })
   
-  //win.setMenuBarVisibility(process.env.NODE_ENV == 'development' )
-  win.setMenuBarVisibility(true)
+  win.setMenuBarVisibility(process.env.NODE_ENV == 'development' )
 
   // change stupid file shceme
   app.whenReady().then(() => {
